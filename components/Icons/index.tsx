@@ -1,0 +1,5 @@
+export { default as CartIcon } from './CartIcon'
+export { default as UserIcon } from './UserIcon'
+export { default as LogoutIcon } from './Logout'
+export { default as MenuIcon } from './Menu'
+export { default as CloseIcon } from './CloseIcon'

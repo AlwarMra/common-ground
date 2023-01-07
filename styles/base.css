@@ -1,0 +1,21 @@
+:root {
+  ---primary: #ffffff;
+}
+
+.mirror__text {
+  display: inline-block;
+  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -o-transform: matrix(-1, 0, 0, 1, 0, 0);
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.mobile__menu {
+  visibility: hidden;
+  transition: all 150ms ease-out;
+}
+.mobile__menu[aria-expanded='true'] {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  transition: all 250ms ease-in;
+}

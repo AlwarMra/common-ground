@@ -1,38 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { GoogleIcon } from '../components/Icons'
 import Layout from '../components/Layout'
-import AuthContext from '../context/AuthContext'
-import { authProvider } from '../types/enums'
+import { authAction } from '../types/enums'
+import useUser from '../hooks/useUser'
 
 const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
+  const { error, submitUser } = useUser()
 
-  const { loginWithGoogle, registerWithEmail } = useContext(AuthContext)
-
-  function register(prov: authProvider) {
-    if (prov === authProvider.GOOGLE) {
-      loginWithGoogle()
-        .then()
-        .catch(err => {
-          console.log(err)
-          setError(true)
-          return
-        })
-    }
-    if (prov === authProvider.MAIL) {
-      registerWithEmail(email, password)
-        .then()
-        .catch(err => {
-          console.log(err)
-          setError(true)
-          return
-        })
-    }
-  }
   return (
     <>
       <Head>
@@ -66,7 +44,9 @@ const Register = () => {
               </div>
               <div className='text-center pt-1 mb-12 pb-1'>
                 <button
-                  onClick={() => register(authProvider.MAIL)}
+                  onClick={() =>
+                    submitUser(authAction.REGISTER_MAIL, email, password)
+                  }
                   className='inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3'
                   type='button'
                   style={{
@@ -78,7 +58,7 @@ const Register = () => {
                 </button>
                 <button
                   type='button'
-                  onClick={() => register(authProvider.GOOGLE)}
+                  onClick={() => submitUser(authAction.LOGIN_GOOGLE)}
                   className='px-6 py-2.5 mb-3 w-full flex items-center gap-4 uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg active:shadow-lg'
                 >
                   <GoogleIcon /> Create account with Google

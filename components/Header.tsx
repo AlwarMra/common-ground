@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import AuthContext from '../context/AuthContext'
 import { CartIcon, UserIcon, MenuIcon, CloseIcon } from './Icons'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+  const { user } = useContext(AuthContext)
   return (
     <div className='relative bg-white'>
       <div className='mx-auto max-w-7xl px-6'>
@@ -37,7 +38,7 @@ const Header: React.FC = () => {
 
           <div className='items-center justify-end flex md:flex-1'>
             <Link
-              href='/login'
+              href={user === null ? '/login' : '/profile'}
               className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
             >
               <UserIcon />

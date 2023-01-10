@@ -1,0 +1,40 @@
+import React, { useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import AuthContext from '../context/AuthContext'
+import { authAction } from '../types/enums'
+
+const useUser = () => {
+  const [error, setError] = useState(false)
+  const { loginWithGoogle, loginWithEmail, registerWithEmail } =
+    useContext(AuthContext)
+  const router = useRouter()
+  const handleError = (err: Error) => {
+    console.error(err)
+    setError(true)
+  }
+  const handleSuccess = () => {
+    router.push('/profile')
+  }
+
+  function submitUser(
+    action: authAction,
+    password: string = '',
+    email: string = '',
+  ) {
+    if (action === authAction.LOGIN_GOOGLE) {
+      loginWithGoogle().then(handleSuccess).catch(handleError)
+    }
+    if (action === authAction.LOGIN_MAIL) {
+      loginWithEmail(email, password).then(handleSuccess).catch(handleError)
+    }
+    if (action === authAction.REGISTER_MAIL) {
+      registerWithEmail(email, password).then(handleSuccess).catch(handleError)
+    }
+  }
+  return {
+    submitUser,
+    error,
+  }
+}
+
+export default useUser

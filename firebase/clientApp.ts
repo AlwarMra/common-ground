@@ -16,18 +16,4 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-// The google AuthProvider registers the user if it does not exists
-export const loginWithGoogle = () => {
-  const googleProvider = new firebase.auth.GoogleAuthProvider()
-  return firebase.auth().signInWithPopup(googleProvider)
-}
-
-export const loginWithEmail = (email: string, password: string) => {
-  return firebase.auth().signInWithEmailAndPassword(email, password)
-}
-
-export const registerWithEmail = (email: string, password: string) => {
-  return firebase.auth().createUserWithEmailAndPassword(email, password)
-}
-
 export default firebase

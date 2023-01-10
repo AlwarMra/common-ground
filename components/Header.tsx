@@ -22,7 +22,7 @@ const Header: React.FC = () => {
             </button>
           </div>
           <div className='flex justify-center lg:flex-1'>
-            <Link href='#' className='flex items-center'>
+            <Link href='/' className='flex items-center'>
               <span className='mirror__text'>Common</span>
               <Image
                 src='/logo.png'

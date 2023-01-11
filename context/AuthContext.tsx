@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import firebase from '../firebase/clientApp'
 import 'firebase/compat/auth'
+import { useRouter } from 'next/router'
 
 export interface AuthContextModel {
   user: firebase.User | null
@@ -38,12 +39,24 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = () => {
     return firebase.auth().signOut()
   }
+
+  // Set user if it changes
   useEffect(() => {
-    const unsubsrcibe = firebase.auth().onAuthStateChanged(user => {
-      setUser(user)
-    })
-    return unsubsrcibe
+    firebase.auth().onAuthStateChanged(setUser)
   }, [])
+
+  const router = useRouter()
+
+  // Check for protected routes
+  useEffect(() => {
+    const privatePaths = ['/profile']
+    const isPrivate = privatePaths.indexOf(router.pathname)
+
+    if (isPrivate !== -1 && user === null) {
+      router.replace('/')
+    }
+  }, [router, user])
+
   const value = {
     user,
     loginWithGoogle,

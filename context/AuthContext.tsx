@@ -3,7 +3,7 @@ import firebase from '../firebase/clientApp'
 import 'firebase/compat/auth'
 import { useRouter } from 'next/router'
 
-export interface AuthContextModel {
+interface AuthContextModel {
   user: firebase.User | null
   loginWithGoogle: () => Promise<firebase.auth.UserCredential>
   loginWithEmail: (
@@ -18,7 +18,7 @@ export interface AuthContextModel {
 }
 const AuthContext = createContext<AuthContextModel>({} as AuthContextModel)
 
-export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
+export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<firebase.User | null>(null)
@@ -46,7 +46,6 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [])
 
   const router = useRouter()
-
   // Check for protected routes
   useEffect(() => {
     const privatePaths = ['/profile']

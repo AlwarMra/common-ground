@@ -1,0 +1,17 @@
+{
+  "user": {
+    "name": "Name",
+    "password": "Password",
+    "mail": "E-mail",
+    "login": "Login",
+    "register": "Register",
+    "login_access": "Please, login to your account",
+    "login_google": "Login with Google",
+    "register_access": "Create account",
+    "register_google": "Create account with Google",
+    "already_account": "Already an account?",
+    "dont_have_account": "Don't have an account?",
+    "email_password_invalid": "Email or password are invalid",
+    "email_in_use": "Email is already in use by another user"
+  }
+}

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
 import { CartIcon, UserIcon, MenuIcon, CloseIcon } from './Icons'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -36,19 +37,24 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          <div className='items-center justify-end flex md:flex-1'>
-            <Link
-              href={user === null ? '/login' : '/profile'}
-              className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
-            >
-              <UserIcon />
-            </Link>
-            <Link
-              href='/'
-              className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
-            >
-              <CartIcon />
-            </Link>
+          <div>
+            <div className='text-right hidden md:block'>
+              <LanguageSwitcher />
+            </div>
+            <div className='items-center justify-end flex md:flex-1'>
+              <Link
+                href={user === null ? '/login' : '/profile'}
+                className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
+              >
+                <UserIcon />
+              </Link>
+              <Link
+                href='/'
+                className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
+              >
+                <CartIcon />
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -16,4 +16,32 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 export const db = firebase.firestore()
+
+//LOGIN functions
+// The google AuthProvider registers the user if it does not exists
+const loginWithGoogle = () => {
+  const googleProvider = new firebase.auth.GoogleAuthProvider()
+  return firebase.auth().signInWithPopup(googleProvider)
+}
+const loginWithEmail = (email: string, password: string) => {
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+}
+const registerWithEmail = (email: string, password: string) => {
+  return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+const logout = () => {
+  return firebase.auth().signOut()
+}
+
+// DB functions
+export function addUsertoDB(name: string, email: string, uid: string) {
+  db.collection('users').add({
+    name,
+    email,
+    userId: uid,
+    orders: [],
+  })
+}
+
 export default firebase
+export { loginWithEmail, loginWithGoogle, registerWithEmail, logout }

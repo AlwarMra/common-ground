@@ -7,7 +7,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { user } = useContext(AuthContext)
+  const user = useContext(AuthContext)
   return (
     <div className='relative bg-white'>
       <div className='mx-auto max-w-7xl px-6'>

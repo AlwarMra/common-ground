@@ -3,42 +3,13 @@ import firebase from '../firebase/clientApp'
 import 'firebase/compat/auth'
 import { useRouter } from 'next/router'
 
-interface AuthContextModel {
-  user: firebase.User | null
-  loginWithGoogle: () => Promise<firebase.auth.UserCredential>
-  loginWithEmail: (
-    email: string,
-    password: string,
-  ) => Promise<firebase.auth.UserCredential>
-  registerWithEmail: (
-    email: string,
-    password: string,
-  ) => Promise<firebase.auth.UserCredential>
-  logout: () => Promise<void>
-}
-const AuthContext = createContext<AuthContextModel>({} as AuthContextModel)
-
+const AuthContext = createContext<firebase.User | null>(
+  {} as firebase.User | null,
+)
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<firebase.User | null>(null)
-
-  // The google AuthProvider registers the user if it does not exists
-  const loginWithGoogle = () => {
-    const googleProvider = new firebase.auth.GoogleAuthProvider()
-    return firebase.auth().signInWithPopup(googleProvider)
-  }
-
-  const loginWithEmail = (email: string, password: string) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
-  }
-
-  const registerWithEmail = (email: string, password: string) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-  }
-  const logout = () => {
-    return firebase.auth().signOut()
-  }
 
   // Set user if it changes
   useEffect(() => {
@@ -56,14 +27,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [router, user])
 
-  const value = {
-    user,
-    loginWithGoogle,
-    loginWithEmail,
-    registerWithEmail,
-    logout,
-  }
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
 }
 
 export default AuthContext

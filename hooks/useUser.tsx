@@ -1,15 +1,17 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthContext from '../context/AuthContext'
 import { authAction } from '../types/auth'
-import { db } from '../firebase/clientApp'
+import {
+  addUsertoDB,
+  loginWithEmail,
+  loginWithGoogle,
+  registerWithEmail,
+} from '../firebase/clientApp'
+import AuthContext from '../context/AuthContext'
 
 const useUser = () => {
   const [error, setError] = useState(false)
-
-  const { loginWithGoogle, loginWithEmail, registerWithEmail } =
-    useContext(AuthContext)
-
+  const user = useContext(AuthContext)
   const router = useRouter()
 
   const handleError = (err: Error) => {
@@ -51,14 +53,10 @@ const useUser = () => {
     }
   }
 
-  function addUsertoDB(name: string, email: string, uid: string) {
-    db.collection('users').add({
-      name,
-      email,
-      userId: uid,
-      orders: [],
-    })
-  }
+  useEffect(() => {
+    if (user) router.replace('/profile')
+    return
+  }, [router, user])
 
   return {
     submitUser,

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Layout from '../components/Layout'
 import Link from 'next/link'
 import { GoogleIcon } from '../components/Icons'
-import { authAction } from '../types/enums'
+import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
 

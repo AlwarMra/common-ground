@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useI18n } from '../context/I18nContext'
-import { langs as langsEnum } from '../types/enums'
+import { langs as langsEnum } from '../types/common'
 import { ChevronIcon, EnglishIcon, SpanishIcon } from './Icons'
 
 const LanguageSwitcher = () => {

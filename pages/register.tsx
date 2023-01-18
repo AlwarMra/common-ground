@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { GoogleIcon } from '../components/Icons'
 import Layout from '../components/Layout'
-import { authAction } from '../types/enums'
+import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
 
@@ -11,6 +11,8 @@ const Register = () => {
   const { t } = useI18n()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+
   const { error, submitUser } = useUser()
 
   return (
@@ -28,7 +30,18 @@ const Register = () => {
               <p className='mb-4 text-2xl'>{t.user.register}</p>
               <div className='mb-4'>
                 <input
+                  type='text'
+                  required
+                  className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                  id='email'
+                  placeholder={t.user.name}
+                  onChange={e => setName(e.target.value)}
+                />
+              </div>
+              <div className='mb-4'>
+                <input
                   type='email'
+                  required
                   className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
                   id='email'
                   placeholder={t.user.mail}
@@ -38,6 +51,7 @@ const Register = () => {
               <div className='mb-4'>
                 <input
                   type='password'
+                  required
                   className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
                   id='password'
                   placeholder={t.user.password}
@@ -47,7 +61,7 @@ const Register = () => {
               <div className='text-center pt-1 mb-12 pb-1'>
                 <button
                   onClick={() =>
-                    submitUser(authAction.REGISTER_MAIL, email, password)
+                    submitUser(authAction.REGISTER_MAIL, email, password, name)
                   }
                   className='inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3'
                   type='button'

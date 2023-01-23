@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserIcon = () => {
+const UserIcon = ({ size = 30 }) => {
   return (
     <svg
       version='1.1'
@@ -9,8 +9,8 @@ const UserIcon = () => {
       xmlnsXlink='http://www.w3.org/1999/xlink'
       x='0px'
       y='0px'
-      width='25px'
-      height='25px'
+      width={size + 'px'}
+      height={size + 'px'}
       viewBox='0 0 64 64'
       enableBackground='new 0 0 64 64'
       xmlSpace='preserve'

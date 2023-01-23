@@ -7,3 +7,7 @@ export { default as GoogleIcon } from './GoogleIcon'
 export { default as SpanishIcon } from './SpanishIcon'
 export { default as EnglishIcon } from './EnglishIcon'
 export { default as ChevronIcon } from './ChevronIcon'
+
+export { default as OrdersIcon } from './OrdersIcon'
+export { default as ProductsIcon } from './ProductsIcon'
+export { default as SettingsIcon } from './SettingsIcon'

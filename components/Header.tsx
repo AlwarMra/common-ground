@@ -46,7 +46,7 @@ const Header: React.FC = () => {
                 href={user === null ? '/login' : '/profile'}
                 className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
               >
-                <UserIcon />
+                <UserIcon size={25} />
               </Link>
               <Link
                 href='/'

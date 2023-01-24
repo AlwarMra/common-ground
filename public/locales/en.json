@@ -12,6 +12,9 @@
     "already_account": "Already an account?",
     "dont_have_account": "Don't have an account?",
     "email_password_invalid": "Email or password are invalid",
-    "email_in_use": "Email is already in use by another user"
+    "email_in_use": "Email is already in use by another user",
+    "email_required": "Email is required",
+    "passoword_required": "Password is required",
+    "name_required": "Please, provide a name"
   }
 }

@@ -10,13 +10,13 @@ import {
 import AuthContext from '../context/AuthContext'
 
 const useUser = () => {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
   const user = useContext(AuthContext)
   const router = useRouter()
 
   const handleError = (err: Error) => {
     console.error(err)
-    setError(true)
+    setError(err.message)
   }
   const handleSuccess = () => {
     router.push('/profile')
@@ -24,10 +24,11 @@ const useUser = () => {
 
   function submitUser(
     action: authAction,
-    password: string = '',
     email: string = '',
+    password: string = '',
     name: string = '',
   ) {
+    console.log('ffff', email, password, name, action)
     if (action === authAction.LOGIN_GOOGLE) {
       loginWithGoogle()
         .then(data => {

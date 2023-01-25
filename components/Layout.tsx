@@ -18,7 +18,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <Header />
-      <main>
+      <main className='mx-auto max-w-7xl px-6'>
         {pathname.includes('dashboard') ? (
           <div className='grid grid-cols-min-content'>
             <Sidebar>
@@ -44,7 +44,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 title={'Settings'}
               />
             </Sidebar>
-            <section>{children}</section>
+            {children}
           </div>
         ) : (
           children

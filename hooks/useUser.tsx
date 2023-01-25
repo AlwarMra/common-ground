@@ -28,7 +28,6 @@ const useUser = () => {
     password: string = '',
     name: string = '',
   ) {
-    console.log('ffff', email, password, name, action)
     if (action === authAction.LOGIN_GOOGLE) {
       loginWithGoogle()
         .then(data => {

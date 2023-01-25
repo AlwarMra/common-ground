@@ -1,23 +1,26 @@
 import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { authAction, authFields } from '../types/auth'
+import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
 import Form from '../components/Form'
-
-interface loginData {
-  email: string
-  password: string
-}
+import { useFormik } from 'formik'
 
 const Login = () => {
   const { error, submitUser } = useUser()
   const { t } = useI18n()
 
-  const handleLogin = (data: loginData) => {
-    return submitUser(authAction.LOGIN_MAIL, data.email, data.password)
-  }
+  const formik = useFormik({
+    initialValues: {
+      action: authAction.LOGIN_MAIL,
+      email: '',
+      password: '',
+    },
+    onSubmit: values => {
+      submitUser(values.action, values.email, values.password)
+    },
+  })
 
   return (
     <>
@@ -30,19 +33,21 @@ const Login = () => {
       <div className='max-w-xl mx-auto px-4 md:px-0'>
         <div className='pt-12 md:mx-6'>
           <p className='mb-4 text-2xl'>{t.user.login}</p>
-          <Form onSubmit={handleLogin}>
-            <Form.Input type={'hidden'} name={authAction.LOGIN_MAIL} />
+
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Input
               type={'email'}
-              name={authFields.EMAIL}
               placeholder={t.user.mail}
-              registerProps={{ required: t.user.email_required }}
+              name={'email'}
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
             <Form.Input
               type={'password'}
-              name={authFields.PASSWORD}
               placeholder={t.user.password}
-              registerProps={{ required: t.user.passoword_required }}
+              name={'password'}
+              value={formik.values.password}
+              onChange={formik.handleChange}
             />
             <Form.SubmitButton text={t.user.login} />
             <Form.GoogleButton
@@ -50,6 +55,7 @@ const Login = () => {
               cb={() => submitUser(authAction.LOGIN_GOOGLE)}
             />
           </Form>
+
           {error && (
             <p className='text-red-600 text-left mt-4'>
               {t.user.email_password_invalid}

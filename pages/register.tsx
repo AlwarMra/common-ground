@@ -5,21 +5,34 @@ import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
 import Form from '../components/Form'
 import Link from 'next/link'
+import { useFormik } from 'formik'
+import { FormikErrors, FormikValues } from 'formik/dist/types'
 
-interface registerData {
-  action: authAction
-  email: string
-  password: string
-  name: string
-}
 const Register = () => {
   const { t } = useI18n()
-
   const { error, submitUser } = useUser()
 
-  const handleRegister = (data: registerData) => {
-    return submitUser(data.action, data.email, data.password, data.name)
+  const validate = (values: FormikValues) => {
+    let errors: FormikErrors<FormikValues> = {}
+    if (!values.name) {
+      errors.name = 'Required'
+    } else if (values.firstName.length > 15) {
+      errors.firstName = 'Must be 15 characters or less'
+    }
+    return errors
   }
+  const formik = useFormik({
+    initialValues: {
+      action: authAction.REGISTER_MAIL,
+      email: '',
+      password: '',
+      name: '',
+    },
+    validate,
+    onSubmit: values => {
+      submitUser(values.action, values.email, values.password, values.name)
+    },
+  })
 
   return (
     <>
@@ -32,33 +45,31 @@ const Register = () => {
       <div className='max-w-xl mx-auto px-4 md:px-0'>
         <div className='pt-12 md:mx-6'>
           <p className='mb-4 text-2xl'>{t.user.register}</p>
-          <Form onSubmit={handleRegister}>
-            <Form.Input
-              type={'hidden'}
-              name={authFields.ACTION}
-              value={authAction.REGISTER_MAIL}
-            />
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Input
               type={'text'}
-              name={authFields.NAME}
+              name={'name'}
               placeholder={t.user.name}
-              registerProps={{ required: t.user.name_required }}
+              value={formik.values.name}
+              onChange={formik.handleChange}
             />
             <Form.Input
               type={'email'}
-              name={authFields.EMAIL}
+              name={'email'}
               placeholder={t.user.mail}
-              registerProps={{ required: t.user.email_required }}
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
             <Form.Input
               type={'password'}
-              name={authFields.PASSWORD}
+              name={'password'}
               placeholder={t.user.password}
-              registerProps={{ required: t.user.passoword_required }}
+              value={formik.values.password}
+              onChange={formik.handleChange}
             />
             <Form.SubmitButton text={t.user.register} />
             <Form.GoogleButton
-              text={t.user.register_google}
+              text={t.user.login_google}
               cb={() => submitUser(authAction.LOGIN_GOOGLE)}
             />
           </Form>

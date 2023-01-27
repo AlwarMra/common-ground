@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Label = ({ text }: { text: string }) => {
+const Label = ({ text, name }: { text: string; name: string }) => {
   return (
-    <label htmlFor={text} className='ml-2 font-bold'>
+    <label htmlFor={name} className='ml-2 font-bold relative bottom-1'>
       {text}
     </label>
   )

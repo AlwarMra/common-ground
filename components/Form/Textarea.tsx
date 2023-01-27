@@ -1,14 +1,16 @@
 import { useField } from 'formik'
 import React from 'react'
-import { InputProps } from '../../types/dashboard'
+import { textAreaProps } from '../../types/dashboard'
 import Label from './Label'
 
-const Input = ({ label, ...props }: InputProps) => {
+const Textarea = ({ label, ...props }: textAreaProps) => {
   const [field, meta] = useField(props)
   return (
     <div className='mb-4'>
       {label && <Label text={label} name={props.name} />}
-      <input
+      <textarea
+        rows={10}
+        cols={40}
         {...field}
         {...props}
         className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
@@ -20,4 +22,4 @@ const Input = ({ label, ...props }: InputProps) => {
   )
 }
 
-export default Input
+export default Textarea

@@ -4,24 +4,12 @@ import Link from 'next/link'
 import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
-import Form from '../components/Form'
-import { useFormik } from 'formik'
+import { SubmitButton, Input, GoogleButton } from '../components/Form'
+import { Formik, useFormik, Form } from 'formik'
 
 const Login = () => {
   const { error, submitUser } = useUser()
   const { t } = useI18n()
-
-  const formik = useFormik({
-    initialValues: {
-      action: authAction.LOGIN_MAIL,
-      email: '',
-      password: '',
-    },
-    onSubmit: values => {
-      submitUser(values.action, values.email, values.password)
-    },
-  })
-
   return (
     <>
       <Head>
@@ -33,28 +21,30 @@ const Login = () => {
       <div className='max-w-xl mx-auto px-4 md:px-0'>
         <div className='pt-12 md:mx-6'>
           <p className='mb-4 text-2xl'>{t.user.login}</p>
-
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Input
-              type={'email'}
-              placeholder={t.user.mail}
-              name={'email'}
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            <Form.Input
-              type={'password'}
-              placeholder={t.user.password}
-              name={'password'}
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-            <Form.SubmitButton text={t.user.login} />
-            <Form.GoogleButton
-              text={t.user.login_google}
-              cb={() => submitUser(authAction.LOGIN_GOOGLE)}
-            />
-          </Form>
+          <Formik
+            initialValues={{
+              action: authAction.LOGIN_MAIL,
+              email: '',
+              password: '',
+            }}
+            onSubmit={(values, actions) => {
+              submitUser(values.action, values.email, values.password)
+            }}
+          >
+            <Form>
+              <Input type='email' name='email' placeholder={t.user.mail} />
+              <Input
+                type='password'
+                name='password'
+                placeholder={t.user.password}
+              />
+              <SubmitButton text={t.user.login} />
+              <GoogleButton
+                text={t.user.login_google}
+                cb={() => submitUser(authAction.LOGIN_GOOGLE)}
+              />
+            </Form>
+          </Formik>
 
           {error && (
             <p className='text-red-600 text-left mt-4'>

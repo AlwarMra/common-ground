@@ -1,12 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
-import { authAction, authFields } from '../types/auth'
+import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
-import Form from '../components/Form'
 import Link from 'next/link'
-import { useFormik } from 'formik'
+import { Form, Formik } from 'formik'
 import { FormikErrors, FormikValues } from 'formik/dist/types'
+import { GoogleButton, Input, SubmitButton } from '../components/Form'
 
 const Register = () => {
   const { t } = useI18n()
@@ -21,19 +21,6 @@ const Register = () => {
     }
     return errors
   }
-  const formik = useFormik({
-    initialValues: {
-      action: authAction.REGISTER_MAIL,
-      email: '',
-      password: '',
-      name: '',
-    },
-    validate,
-    onSubmit: values => {
-      submitUser(values.action, values.email, values.password, values.name)
-    },
-  })
-
   return (
     <>
       <Head>
@@ -45,34 +32,39 @@ const Register = () => {
       <div className='max-w-xl mx-auto px-4 md:px-0'>
         <div className='pt-12 md:mx-6'>
           <p className='mb-4 text-2xl'>{t.user.register}</p>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Input
-              type={'text'}
-              name={'name'}
-              placeholder={t.user.name}
-              value={formik.values.name}
-              onChange={formik.handleChange}
-            />
-            <Form.Input
-              type={'email'}
-              name={'email'}
-              placeholder={t.user.mail}
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            <Form.Input
-              type={'password'}
-              name={'password'}
-              placeholder={t.user.password}
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-            <Form.SubmitButton text={t.user.register} />
-            <Form.GoogleButton
-              text={t.user.login_google}
-              cb={() => submitUser(authAction.LOGIN_GOOGLE)}
-            />
-          </Form>
+
+          <Formik
+            initialValues={{
+              action: authAction.REGISTER_MAIL,
+              email: '',
+              password: '',
+              name: '',
+            }}
+            onSubmit={(values, actions) => {
+              submitUser(
+                values.action,
+                values.email,
+                values.password,
+                values.name,
+              )
+            }}
+          >
+            <Form>
+              <Input type='text' name='name' placeholder={t.user.name} />
+              <Input type='email' name='email' placeholder={t.user.mail} />
+              <Input
+                type='password'
+                name='password'
+                placeholder={t.user.password}
+              />
+              <SubmitButton text={t.user.register} />
+              <GoogleButton
+                text={t.user.register_google}
+                cb={() => submitUser(authAction.LOGIN_GOOGLE)}
+              />
+            </Form>
+          </Formik>
+
           {error && (
             <p className='text-red-600 text-left mt-4'>
               {t.user.email_password_invalid}

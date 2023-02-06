@@ -54,13 +54,32 @@ const NewProduct = () => {
     ignore_stock: Yup.boolean(),
     images: Yup.array().of(Yup.string()).min(1),
   })
+  const uploadAllImages = async (files: File[]) => {
+    const newImgs = []
+    for (let i = 0; i < files.length; i++) {
+      const snapshot = await uploadImage(files[i])
+      const imgUrl = await snapshot.ref.getDownloadURL()
+      newImgs.push(imgUrl)
+    }
+    return newImgs
+  }
 
   return (
     <section className='p-4 bg-gray-100 rounded'>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={async (values, actions) => {}}
+        onSubmit={async (values, actions) => {
+          setError(null)
+          uploadAllImages(files)
+            .then(newImgs => {
+              values.images = values.images.concat(newImgs)
+            })
+            .catch(err => setError(err.message))
+          if (typeof error === 'string') return
+          values.compared_at_price = values.price * 100
+          values.compared_at_price = values.compared_at_price * 100
+        }}
       >
         {formik => (
           <Form>

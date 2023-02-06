@@ -2,3 +2,10 @@
 @import './base.css';
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .error {
+    @apply text-red-600;
+  }
+  /* ... */
+}

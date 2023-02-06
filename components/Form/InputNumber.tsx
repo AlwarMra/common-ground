@@ -37,7 +37,7 @@ const InputNumber = ({
         <span className='absolute top-2/4 left-2 text-gray-400'>€</span>
       )}
       {meta.touched && meta.error ? (
-        <div className='error'>{meta.error}</div>
+        <div className='error absolute'>{meta.error}</div>
       ) : null}
     </div>
   )

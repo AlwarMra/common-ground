@@ -1,6 +1,8 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/auth'
 import 'firebase/compat/firestore'
+import 'firebase/compat/storage'
+import { Product } from '../types/dashboard'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAcTedBuWurGyfn_aKwbZSNUPqAiHGCFLw',
@@ -43,5 +45,14 @@ export function addUsertoDB(name: string, email: string, uid: string) {
   })
 }
 
+export function addProduct(prod: Product) {}
+
+export function updateProduct(prod: Product) {}
+
+export function uploadImage(file: File) {
+  const ref = firebase.storage().ref(`products/${file.name}`)
+  return ref.put(file)
+}
+export function deleteImage(file: File) {}
 export default firebase
 export { loginWithEmail, loginWithGoogle, registerWithEmail, logout }

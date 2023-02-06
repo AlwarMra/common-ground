@@ -1,5 +1,8 @@
+import React, { useState } from 'react'
+import Image from 'next/image'
 import { Formik, Form } from 'formik'
-import React from 'react'
+import * as Yup from 'yup'
+
 import { TabPanel, useTabs } from 'react-headless-tabs'
 import {
   Input,
@@ -7,36 +10,57 @@ import {
   InputNumber,
   SubmitButton,
   InputChecbox,
+  InputFile,
 } from '../../../components/Form'
 import TabSelector from '../../../components/TabSelector'
+import { uploadImage } from '../../../firebase/clientApp'
+import { Product } from '../../../types/dashboard'
 
 const NewProduct = () => {
   const [selectedTabLang, setSelectedTabLang] = useTabs(['es', 'en'])
-
-  function checkValue(val: string) {
-    if (val === '') return
-    const v = val.replace(',', '.')
-    if (Number(v) < 0 || isNaN(Number(v)) || Number(v) === 0) {
-      return 0
-    }
-    return val
+  const [files, setFiles] = useState<File[]>([])
+  const [error, setError] = useState<string | null>(null)
+  const removeFile = (oldFile: File) => {
+    setFiles(files.filter(file => file.name !== oldFile.name))
   }
+
+  const initialValues: Product = {
+    es: {
+      title_es: '',
+      description_es: '',
+    },
+    en: {
+      title_en: '',
+      description_en: '',
+    },
+    price: 0,
+    compared_at_price: 0,
+    stock: 0,
+    ignore_stock: true,
+    images: [],
+  }
+  const validationSchema = Yup.object().shape({
+    es: Yup.object({
+      title_es: Yup.string().required(),
+      description_es: Yup.string().required(),
+    }),
+    en: Yup.object({
+      title_en: Yup.string().required(),
+      description_en: Yup.string().required(),
+    }),
+    price: Yup.number().positive().required(),
+    compared_at_price: Yup.number().positive().min(0),
+    stock: Yup.number().integer(),
+    ignore_stock: Yup.boolean(),
+    images: Yup.array().of(Yup.string()).min(1),
+  })
+
   return (
     <section className='p-4 bg-gray-100 rounded'>
       <Formik
-        initialValues={{
-          title_es: '',
-          title_en: '',
-          description_es: '',
-          description_en: '',
-          price: '0',
-          compared_at_price: '0',
-          stock: '0',
-          ignore_stock: true,
-        }}
-        onSubmit={(values, actions) => {
-          console.log(values)
-        }}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, actions) => {}}
       >
         {formik => (
           <Form>
@@ -57,12 +81,12 @@ const NewProduct = () => {
             <TabPanel hidden={selectedTabLang !== 'es'}>
               <Input
                 type='text'
-                name='title_es'
+                name='es.title_es'
                 label='Title'
                 placeholder='Title ES'
               />
               <Textarea
-                name='description_es'
+                name='es.description_es'
                 label='Description'
                 placeholder='Description ES'
               />
@@ -70,17 +94,17 @@ const NewProduct = () => {
             <TabPanel hidden={selectedTabLang !== 'en'}>
               <Input
                 type='text'
-                name='title_en'
+                name='en.title_en'
                 label='Title'
                 placeholder='Title EN'
               />
               <Textarea
-                name='description_en'
+                name='en.description_en'
                 label='Description'
                 placeholder='Description EN'
               />
             </TabPanel>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-4 mb-4'>
               <InputNumber
                 placeholder='Price'
                 name='price'
@@ -101,11 +125,37 @@ const NewProduct = () => {
                 text='Display product if out of stock?'
               />
             </div>
-
+            <div className='flex flex-wrap gap-4 my-8'>
+              <InputFile setFileState={setFiles} fileState={files} />
+              {files &&
+                files.map(file => (
+                  <div
+                    key={file.size}
+                    className='relative w-36 h-36 rounded-lg'
+                  >
+                    <span
+                      onClick={() => removeFile(file)}
+                      className='absolute z-[1] bg-red-600 text-white right-1 top-1 p-1 rounded-full w-8 h-8 text-center cursor-pointer'
+                    >
+                      X
+                    </span>
+                    <Image
+                      style={{ objectFit: 'cover' }}
+                      alt={file.name}
+                      src={URL.createObjectURL(file)}
+                      fill
+                    />
+                  </div>
+                ))}
+            </div>
+            {formik.errors.images && (
+              <div className='mb-4 error'>{formik.errors.images}</div>
+            )}
             <SubmitButton text='Create product' />
           </Form>
         )}
       </Formik>
+      {error && <p>{error}</p>}
     </section>
   )
 }

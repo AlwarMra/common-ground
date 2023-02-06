@@ -1,6 +1,7 @@
 export { default as Input } from './Input'
 export { default as InputNumber } from './InputNumber'
 export { default as InputChecbox } from './InputChecbox'
+export { default as InputFile } from './InputFile'
 export { default as Textarea } from './Textarea'
 export { default as SubmitButton } from './SubmitButton'
 export { default as GoogleButton } from './GoogleButton'

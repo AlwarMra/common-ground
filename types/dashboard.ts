@@ -18,3 +18,19 @@ export interface textAreaProps {
   placeholder: string
   label?: string
 }
+
+export interface Product {
+  es: {
+    title_es: string
+    description_es: string
+  }
+  en: {
+    title_en: string
+    description_en: string
+  }
+  price: number
+  compared_at_price: number
+  stock: number
+  ignore_stock: boolean
+  images: string[]
+}

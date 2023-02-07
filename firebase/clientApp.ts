@@ -58,8 +58,10 @@ export function getAllProducts() {
     .get()
     .then(({ docs }) => {
       return docs.map(doc => {
+        const data = doc.data()
+        data.id = doc.id
         return {
-          ...doc.data(),
+          ...data,
           id: doc.id,
         }
       })

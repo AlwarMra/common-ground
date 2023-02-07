@@ -44,15 +44,34 @@ export function addUsertoDB(name: string, email: string, uid: string) {
     orders: [],
   })
 }
-
-export function addProduct(prod: Product) {}
+// Products
+export function addProduct(prod: Product) {
+  return db.collection('products').add(prod)
+}
 
 export function updateProduct(prod: Product) {}
 
+export function getAllProducts() {
+  return db
+    .collection('products')
+    .orderBy('es.title_es')
+    .get()
+    .then(({ docs }) => {
+      return docs.map(doc => {
+        return {
+          ...doc.data(),
+          id: doc.id,
+        }
+      })
+    })
+}
+
+// Images
 export function uploadImage(file: File) {
   const ref = firebase.storage().ref(`products/${file.name}`)
   return ref.put(file)
 }
 export function deleteImage(file: File) {}
+
 export default firebase
 export { loginWithEmail, loginWithGoogle, registerWithEmail, logout }

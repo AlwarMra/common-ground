@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-
 import { TabPanel, useTabs } from 'react-headless-tabs'
 import {
   Input,
@@ -13,7 +12,7 @@ import {
   InputFile,
 } from '../../../components/Form'
 import TabSelector from '../../../components/TabSelector'
-import { uploadImage } from '../../../firebase/clientApp'
+import { addProduct, uploadImage } from '../../../firebase/clientApp'
 import { Product } from '../../../types/dashboard'
 
 const NewProduct = () => {
@@ -52,7 +51,7 @@ const NewProduct = () => {
     compared_at_price: Yup.number().positive().min(0),
     stock: Yup.number().integer(),
     ignore_stock: Yup.boolean(),
-    images: Yup.array().of(Yup.string()).min(1),
+    images: Yup.array().of(Yup.string()),
   })
   const uploadAllImages = async (files: File[]) => {
     const newImgs = []
@@ -77,8 +76,12 @@ const NewProduct = () => {
             })
             .catch(err => setError(err.message))
           if (typeof error === 'string') return
-          values.compared_at_price = values.price * 100
-          values.compared_at_price = values.compared_at_price * 100
+          const newProduct = values
+          newProduct.price = newProduct.price * 100
+          if (newProduct.compared_at_price !== 0) {
+            newProduct.compared_at_price = newProduct.compared_at_price * 100
+          }
+          addProduct(newProduct)
         }}
       >
         {formik => (
@@ -174,7 +177,7 @@ const NewProduct = () => {
           </Form>
         )}
       </Formik>
-      {error && <p>{error}</p>}
+      {error !== null && <p>{error}</p>}
     </section>
   )
 }

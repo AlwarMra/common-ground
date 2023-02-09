@@ -19,6 +19,12 @@ if (!firebase.apps.length) {
 }
 export const db = firebase.firestore()
 
+//Check Firebase Docs for future implementation of auth persistence
+// https://firebase.google.com/docs/auth/web/auth-state-persistence?hl=es-419#web-version-8
+// f=> irebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>{})
+
+//Also check this article to implement SSR Auth system https://colinhacks.com/essays/nextjs-firebase-authentication
+
 //LOGIN functions
 // The google AuthProvider registers the user if it does not exists
 const loginWithGoogle = () => {
@@ -35,7 +41,8 @@ const logout = () => {
   return firebase.auth().signOut()
 }
 
-// DB functions
+// DB FUNCTIONS
+// User
 export function addUsertoDB(name: string, email: string, uid: string) {
   db.collection('users').add({
     name,

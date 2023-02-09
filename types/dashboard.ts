@@ -20,6 +20,7 @@ export interface textAreaProps {
 }
 
 export interface Product {
+  id?: string
   es: {
     title_es: string
     description_es: string

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Product } from '../../types/dashboard'
-import { Form, Formik, FormikHelpers } from 'formik'
-import * as Yup from 'yup'
+import { ProductFormProps } from '../../types/dashboard'
+import { Form, Formik } from 'formik'
+import { productSchema } from '../../yupSchema'
 import TabSelector from '../TabSelector'
 import { TabPanel, useTabs } from 'react-headless-tabs'
 import {
@@ -14,52 +14,23 @@ import {
 } from '../Form'
 import Image from 'next/image'
 
-interface ProductFormProps {
-  initialValues: Product
-  submitProduct: (values: Product, action: FormikHelpers<Product>) => void
-  error: string | null
-  removeNewFile: (file: File) => void
-  currentFiles?: {
-    files: string[]
-    setFiles: React.Dispatch<React.SetStateAction<String[]>>
-  }
-  newFiles: {
-    files: File[]
-    setFiles: React.Dispatch<React.SetStateAction<File[]>>
-  }
-}
-
-const validationSchema = Yup.object().shape({
-  es: Yup.object({
-    title_es: Yup.string().required(),
-    description_es: Yup.string().required(),
-  }),
-  en: Yup.object({
-    title_en: Yup.string().required(),
-    description_en: Yup.string().required(),
-  }),
-  price: Yup.number().positive().required(),
-  compared_at_price: Yup.number().positive().min(0),
-  stock: Yup.number().integer(),
-  ignore_stock: Yup.boolean(),
-  images: Yup.array().of(Yup.string()),
-})
-
 const ProductForm = ({
   initialValues,
   submitProduct,
   error,
   newFiles,
+  currentFiles,
   removeNewFile,
+  actionType,
 }: ProductFormProps) => {
   const [selectedTabLang, setSelectedTabLang] = useTabs(['es', 'en'])
   return (
     <section className='p-4 bg-gray-100 rounded'>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={productSchema}
         onSubmit={(values, actions) => {
-          submitProduct(values, actions)
+          submitProduct(values, actions, actionType)
         }}
       >
         {formik => (
@@ -150,14 +121,40 @@ const ProductForm = ({
                     />
                   </div>
                 ))}
+              {currentFiles !== undefined &&
+                currentFiles.files &&
+                currentFiles.files.map(file => (
+                  <div key={file} className='relative w-36 h-36 rounded-lg'>
+                    <span
+                      onClick={() => removeNewFile(file)}
+                      className='absolute z-[1] bg-red-600 text-white right-1 top-1 p-1 rounded-full w-8 h-8 text-center cursor-pointer'
+                    >
+                      X
+                    </span>
+                    <Image
+                      style={{ objectFit: 'cover' }}
+                      alt={file}
+                      src={file}
+                      fill
+                    />
+                  </div>
+                ))}
             </div>
             {formik.errors.images && (
               <div className='mb-4 error'>{formik.errors.images}</div>
             )}
-            <SubmitButton
-              text='Create product'
-              disabled={formik.isSubmitting}
-            />
+            {actionType === 'add' && (
+              <SubmitButton
+                text='Create product'
+                disabled={formik.isSubmitting}
+              />
+            )}
+            {actionType === 'update' && (
+              <SubmitButton
+                text='Update product'
+                disabled={formik.isSubmitting}
+              />
+            )}
           </Form>
         )}
       </Formik>

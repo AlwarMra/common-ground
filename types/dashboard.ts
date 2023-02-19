@@ -1,5 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react'
+import { FormikHelpers } from 'formik'
 
+// Inputs
 export interface InputProps {
   type: HTMLInputTypeAttribute
   name: string
@@ -19,6 +21,7 @@ export interface textAreaProps {
   label?: string
 }
 
+//Product
 export interface Product {
   id?: string
   es: {
@@ -34,4 +37,23 @@ export interface Product {
   stock: number
   ignore_stock: boolean
   images: string[]
+}
+export interface ProductFormProps {
+  initialValues: Product
+  submitProduct: (
+    values: Product,
+    action: FormikHelpers<Product>,
+    actionType: 'add' | 'update',
+  ) => void
+  error: string | null
+  removeNewFile: (file: File | string) => void
+  actionType: 'add' | 'update'
+  newFiles: {
+    files: File[]
+    setFiles: React.Dispatch<React.SetStateAction<File[]>>
+  }
+  currentFiles?: {
+    files: string[]
+    setFiles: React.Dispatch<React.SetStateAction<string[]>>
+  }
 }

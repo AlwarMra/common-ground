@@ -55,8 +55,12 @@ export function addUsertoDB(name: string, email: string, uid: string) {
 export function addProduct(prod: Product) {
   return db.collection('products').add(prod)
 }
-
-export function updateProduct(prod: Product) {}
+export function getProductById(id: string) {
+  return db.collection('products').doc(id).get()
+}
+export function updateProduct(prod: Product, id: string) {
+  return db.collection('products').doc(id).update(prod)
+}
 
 export function getAllProducts() {
   return db
@@ -80,7 +84,18 @@ export function uploadImage(file: File) {
   const ref = firebase.storage().ref(`products/${file.name}`)
   return ref.put(file)
 }
-export function deleteImage(file: File) {}
+export function deleteImage(url: string) {
+  const imgRef = firebase.storage().refFromURL(url)
+  if (imgRef)
+    imgRef
+      .delete()
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+}
 
 export default firebase
 export { loginWithEmail, loginWithGoogle, registerWithEmail, logout }

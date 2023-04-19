@@ -3,10 +3,10 @@ import { Spinner } from '../Icons'
 
 interface submitButton {
   text: string
-  disabled: boolean
+  disabled?: boolean
 }
 
-const SubmitButton = ({ text, disabled }: submitButton) => {
+const SubmitButton = ({ text, disabled = false }: submitButton) => {
   return (
     <button
       disabled={disabled}

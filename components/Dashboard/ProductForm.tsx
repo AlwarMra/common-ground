@@ -22,6 +22,7 @@ const ProductForm = ({
   currentFiles,
   removeNewFile,
   actionType,
+  openModal,
 }: ProductFormProps) => {
   const [selectedTabLang, setSelectedTabLang] = useTabs(['es', 'en'])
   return (
@@ -150,10 +151,26 @@ const ProductForm = ({
               />
             )}
             {actionType === 'update' && (
-              <SubmitButton
-                text='Update product'
-                disabled={formik.isSubmitting}
-              />
+              <div className='flex gap-4'>
+                <SubmitButton
+                  text='Update product'
+                  disabled={formik.isSubmitting}
+                />
+                <button
+                  className='inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3'
+                  type='submit'
+                  onClick={e => {
+                    e.preventDefault()
+                    openModal(true)
+                  }}
+                  style={{
+                    background:
+                      'linear-gradient(to right,#ee7724,#d8363a,#dd3675,#b44593)',
+                  }}
+                >
+                  Delete product
+                </button>
+              </div>
             )}
           </Form>
         )}

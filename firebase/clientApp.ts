@@ -61,7 +61,9 @@ export function getProductById(id: string) {
 export function updateProduct(prod: Product, id: string) {
   return db.collection('products').doc(id).update(prod)
 }
-
+export function deleteProduct(id: string) {
+  return db.collection('products').doc(id).delete()
+}
 export function getAllProducts() {
   return db
     .collection('products')

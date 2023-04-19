@@ -7,9 +7,11 @@ import {
   deleteImage,
   getProductById,
   updateProduct,
+  deleteProduct,
   uploadImage,
 } from '../../../firebase/clientApp'
 import { Product } from '../../../types/dashboard'
+import Modal from '../../../components/Modal'
 
 const Product = () => {
   const [product, setProduct] = useState<Product | null>(null)
@@ -17,7 +19,7 @@ const Product = () => {
   const [currentFiles, setCurrentFiles] = useState<string[]>([])
   const [actionType, setActionType] = useState<'add' | 'update'>('add')
   const [error, setError] = useState<string | null>(null)
-
+  const [modalState, setModalState] = useState(false)
   const router = useRouter()
   const { id } = router.query
 
@@ -44,11 +46,20 @@ const Product = () => {
     }
     return
   }
-
   const uploadNewProduct = (values: Product) => {
     addProduct(values)
       .then(() => router.push('/dashboard/products'))
       .catch(err => setError(err.message))
+  }
+  const removeProduct = () => {
+    if (typeof id === 'string') {
+      deleteProduct(id)
+        .then(() => {
+          router.push('/dashboard/products')
+        })
+        .catch(err => setError(err.message))
+        .finally(() => setModalState(false))
+    }
   }
 
   const submitProduct = async (
@@ -128,15 +139,23 @@ const Product = () => {
     return <div>Loading...</div>
   }
   return (
-    <ProductForm
-      initialValues={product}
-      newFiles={{ files, setFiles }}
-      currentFiles={{ files: currentFiles, setFiles: setCurrentFiles }}
-      submitProduct={submitProduct}
-      removeNewFile={removeFile}
-      error={error}
-      actionType={actionType}
-    />
+    <>
+      <Modal
+        modalAction={removeProduct}
+        modalState={modalState}
+        closeModal={setModalState}
+      />
+      <ProductForm
+        initialValues={product}
+        newFiles={{ files, setFiles }}
+        currentFiles={{ files: currentFiles, setFiles: setCurrentFiles }}
+        submitProduct={submitProduct}
+        removeNewFile={removeFile}
+        error={error}
+        actionType={actionType}
+        openModal={setModalState}
+      />
+    </>
   )
 }
 

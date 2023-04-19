@@ -56,4 +56,5 @@ export interface ProductFormProps {
     files: string[]
     setFiles: React.Dispatch<React.SetStateAction<string[]>>
   }
+  openModal: React.Dispatch<React.SetStateAction<boolean>>
 }

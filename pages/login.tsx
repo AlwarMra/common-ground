@@ -5,7 +5,7 @@ import { authAction } from '../types/auth'
 import useUser from '../hooks/useUser'
 import { useI18n } from '../context/I18nContext'
 import { SubmitButton, Input, GoogleButton } from '../components/Form'
-import { Formik, useFormik, Form } from 'formik'
+import { Formik, Form } from 'formik'
 
 const Login = () => {
   const { error, submitUser } = useUser()

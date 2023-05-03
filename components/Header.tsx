@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const user = useContext(AuthContext)
   return (
-    <div className='relative bg-white'>
+    <header className='relative bg-white'>
       <div className='mx-auto max-w-7xl px-6'>
         <div className='grid grid-cols-1/3-center items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10'>
           <div className='-my-2 -mr-2 '>
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
             </button>
           </div>
           <div className='flex justify-center lg:flex-1'>
-            <Link href='/' className='flex items-center'>
+            <Link href='/' className='flex items-center font-fancy md:text-xl'>
               <span className='mirror__text'>Common</span>
               <Image
                 src='/logo.png'
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
       To: "opacity-0 scale-95"
   --> */}
       <div
-        className='scale-95 opacity-0 mobile__menu absolute inset-x-0 top-0 origin-top-left transform p-2 transition md:hidden'
+        className='scale-95 opacity-0 mobile__menu absolute inset-x-0 top-0 origin-top-left transform p-2 transition md:hidden z-10'
         aria-expanded={mobileMenuOpen}
       >
         <div className='divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5'>
@@ -291,7 +291,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 

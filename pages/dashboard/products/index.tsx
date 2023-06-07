@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product } from '../../../types/dashboard'
+import { Product } from '../../../types/common'
 import { getAllProducts } from '../../../firebase/clientApp'
 
 const DashboardProducts = () => {
@@ -19,7 +19,11 @@ const DashboardProducts = () => {
         <h3 className='font-bold text-lg'>All products</h3>
         <Link
           href='/dashboard/products/new-product'
-          className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+          className='inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out mb-3'
+          style={{
+            background:
+              'linear-gradient(to right,#bae6fd,#93c5fd,#5eead4,#6ee7b7)',
+          }}
         >
           Add new product
         </Link>

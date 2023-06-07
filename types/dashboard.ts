@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute } from 'react'
 import { FormikHelpers } from 'formik'
+import { Product } from './common'
 
 // Inputs
 export interface InputProps {
@@ -21,23 +22,6 @@ export interface textAreaProps {
   label?: string
 }
 
-//Product
-export interface Product {
-  id?: string
-  es: {
-    title_es: string
-    description_es: string
-  }
-  en: {
-    title_en: string
-    description_en: string
-  }
-  price: number
-  compared_at_price: number
-  stock: number
-  ignore_stock: boolean
-  images: string[]
-}
 export interface ProductFormProps {
   initialValues: Product
   submitProduct: (

@@ -10,7 +10,7 @@ import {
   deleteProduct,
   uploadImage,
 } from '../../../firebase/clientApp'
-import { Product } from '../../../types/dashboard'
+import { Product } from '../../../types/common'
 import Modal from '../../../components/Modal'
 
 const Product = () => {

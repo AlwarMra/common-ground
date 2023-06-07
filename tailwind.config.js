@@ -12,6 +12,10 @@ module.exports = {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
         fancy: ['Alfa Slab One'],
       },
+      colors: {
+        'primary-color': 'var(--primary-color)',
+        'secondary-color': 'var(--secondary-color)',
+      },
       gridTemplateColumns: {
         '1/3-center': '1fr 4fr 1fr',
         'custom-fit': 'repeat(auto-fit, minmax(180px, 1fr))',

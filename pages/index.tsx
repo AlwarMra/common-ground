@@ -1,8 +1,13 @@
 import Head from 'next/head'
-import Layout from '../components/Layout'
 import Banner from '../components/Banner'
+import ProductGrid from '../components/ProductGrid'
+import { GetStaticProps } from 'next'
+import { getAllProducts } from '../firebase/clientApp'
+import { useI18n } from '../context/I18nContext'
+import shuffleArray from '../utils/utils'
 
-export default function Home() {
+export default function Home({ prods }: { prods: any }) {
+  const { routerLocale } = useI18n()
   return (
     <>
       <Head>
@@ -15,6 +20,21 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Banner />
+      <ProductGrid prods={prods} lang={routerLocale} />
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps<{ prods: any }> = async () => {
+  try {
+    const prods = await getAllProducts()
+    shuffleArray(prods)
+    return {
+      props: { prods },
+    }
+  } catch {
+    return {
+      notFound: true,
+    }
+  }
 }

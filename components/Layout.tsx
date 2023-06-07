@@ -18,7 +18,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className='mx-auto max-w-7xl px-6 bg-white'>
+      <main className='mx-auto max-w-7xl w-11/12'>
         {pathname.includes('dashboard') ? (
           <div className='grid grid-cols-min-content mt-4 gap-2'>
             <Sidebar>

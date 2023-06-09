@@ -27,3 +27,7 @@ export interface Product {
   ignore_stock: boolean
   images: string[]
 }
+
+export interface CartProduct extends Product {
+  q: number
+}

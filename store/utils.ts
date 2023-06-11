@@ -39,26 +39,19 @@ function removeFromCartUtil(item: CartProduct, array: CartProduct[]) {
   return newArray
 }
 
-function calculateTotalQuantity(array: CartProduct[]) {
+function calculateTotalPriceAndQuantity(array: CartProduct[]) {
+  let price = 0
   let q = 0
   for (let i = 0; i < array.length; i++) {
+    price += array[i].q * array[i].price
     q += array[i].q
   }
-  return q
-}
-function calculateTotalPrice(array: CartProduct[]) {
-  let price = 0
-
-  for (let i = 0; i < array.length; i++) {
-    price += array[i].q * array[i].price
-  }
-  return price
+  return { q, price }
 }
 
 export {
   addToCartUtil,
   substractFromCartUtil,
   removeFromCartUtil,
-  calculateTotalQuantity,
-  calculateTotalPrice,
+  calculateTotalPriceAndQuantity,
 }

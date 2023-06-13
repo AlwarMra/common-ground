@@ -4,14 +4,15 @@ import React, { useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
 import { CartIcon, UserIcon, MenuIcon, CloseIcon } from './Icons'
 import LanguageSwitcher from './LanguageSwitcher'
-import { useAppDispatch } from '../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
 import { uiActions } from '../store/ui'
+import cart from '../store/cart'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const user = useContext(AuthContext)
   const dispatch = useAppDispatch()
-
+  const cartQ = useAppSelector(state => state.cart.totalQuantity)
   const openDrawer = () => {
     dispatch(uiActions.showDrawer(true))
     dispatch(uiActions.showOverlay(false))
@@ -59,9 +60,14 @@ const Header: React.FC = () => {
                 <UserIcon size={25} />
               </Link>
               <span
-                className='inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100 cursor-pointer'
+                className='inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100 cursor-pointer relative'
                 onClick={openDrawer}
               >
+                {cartQ > 0 && (
+                  <span className='w-6 h-6 absolute left-6 bottom-6 p-1 text-center font-bold text-xs rounded-full bg-red-300'>
+                    {cartQ}
+                  </span>
+                )}
                 <CartIcon />
               </span>
             </div>

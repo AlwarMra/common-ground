@@ -4,10 +4,20 @@ import React, { useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
 import { CartIcon, UserIcon, MenuIcon, CloseIcon } from './Icons'
 import LanguageSwitcher from './LanguageSwitcher'
+import { useAppDispatch } from '../hooks/reduxHooks'
+import { uiActions } from '../store/ui'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const user = useContext(AuthContext)
+  const dispatch = useAppDispatch()
+
+  const openDrawer = () => {
+    dispatch(uiActions.showDrawer(true))
+    dispatch(uiActions.showOverlay(false))
+    return
+  }
+
   return (
     <header className='relative bg-white'>
       <div className='mx-auto max-w-7xl px-6'>
@@ -48,12 +58,12 @@ const Header: React.FC = () => {
               >
                 <UserIcon size={25} />
               </Link>
-              <Link
-                href='/'
-                className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'
+              <span
+                className='inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100 cursor-pointer'
+                onClick={openDrawer}
               >
                 <CartIcon />
-              </Link>
+              </span>
             </div>
           </div>
         </div>

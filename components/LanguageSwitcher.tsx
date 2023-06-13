@@ -37,7 +37,7 @@ const LanguageSwitcher = () => {
 
   return (
     <>
-      <div className='relative z-10 py-2'>
+      <div className='relative py-2'>
         <button
           onClick={() => setOpen(!open)}
           id='states-button'

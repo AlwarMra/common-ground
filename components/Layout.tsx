@@ -11,6 +11,7 @@ import {
   LogoutIcon,
 } from './Icons'
 import Drawer from './Drawer/Drawer'
+import Overlay from './Overlay'
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { pathname } = useRouter()
@@ -18,6 +19,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   if (pathname.includes('dashboard')) {
     return (
       <>
+        <Overlay />
         <Header />
         <main className='mx-auto max-w-7xl w-11/12'>
           <div className='grid grid-cols-min-content mt-4 gap-2'>
@@ -54,6 +56,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <>
+      <Overlay />
       <Header />
       <Drawer />
       <main className='mx-auto max-w-7xl w-11/12'>{children}</main>

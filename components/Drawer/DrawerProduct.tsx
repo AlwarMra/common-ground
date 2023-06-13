@@ -20,7 +20,7 @@ const DrawerProduct = React.memo(function DrawerProduct({
   const title = ('title_' + lang) as keyof CartProduct
   const dispatch = useAppDispatch()
   return (
-    <div className='grid grid-cols-1-2 items-end mt-4 mx-1 no-underline md:gap-4'>
+    <div className='grid grid-cols-1-2 items-end my-4 mx-1 py-2 no-underline md:gap-4 relative after:content-[""] after:absolute after:border-b after:border-b-amber-400 after:left-0 after:w-full after:-bottom-2'>
       <Link href={`/products/${prod.id}`} className=''>
         <Image
           src={prod.images[0]}

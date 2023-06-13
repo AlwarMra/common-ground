@@ -26,7 +26,7 @@ const Banner = () => {
 
   return (
     <section className='relative mt-8'>
-      <div className='absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 bg-white z-10 p-4 rounded-sm w-4/5 md:w-auto'>
+      <div className='absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 bg-white z-[2] p-4 rounded-sm w-4/5 md:w-auto'>
         <h1 className='text-center font-fancy text-xl md:text-3xl mb-4'>
           Dub music for life
         </h1>

@@ -1,10 +1,5 @@
 import { CartProduct } from '../types/common'
 
-type ArrayWithProperty = {
-  q: number
-  [key: string]: any
-}
-
 function addToCartUtil(item: CartProduct, array: CartProduct[]) {
   const existProduct = array.find(prod => prod.id === item.id)
 
@@ -43,7 +38,7 @@ function calculateTotalPriceAndQuantity(array: CartProduct[]) {
   let price = 0
   let q = 0
   for (let i = 0; i < array.length; i++) {
-    price += array[i].q * array[i].price
+    price += Number((array[i].q * array[i].price).toFixed(2))
     q += array[i].q
   }
   return { q, price }

@@ -89,4 +89,6 @@ const cartSlice = createSlice({
 })
 
 export const cartActions = cartSlice.actions
+export type cartActionsType = typeof cartActions
+
 export default cartSlice.reducer

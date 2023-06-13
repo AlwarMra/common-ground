@@ -5,9 +5,22 @@ import { GetStaticProps } from 'next'
 import { getAllProducts } from '../firebase/clientApp'
 import { useI18n } from '../context/I18nContext'
 import shuffleArray from '../utils/utils'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { cartActions, cartStorage } from '../store/cart'
 
 export default function Home({ prods }: { prods: any }) {
   const { routerLocale } = useI18n()
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    let cartItems
+    const items = window.localStorage.getItem(cartStorage)
+    if (items !== null) cartItems = JSON.parse(items)
+    if (items && items.length > 0) dispatch(cartActions.populateCart(cartItems))
+  }, [dispatch])
+
   return (
     <>
       <Head>

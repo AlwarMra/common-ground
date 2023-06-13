@@ -8,7 +8,6 @@ import {
 } from './utils'
 
 interface Cart {
-  showModal: boolean
   cartItems: CartProduct[] | []
   totalQuantity: number
   totalPrice: number
@@ -19,7 +18,6 @@ export const cartStorage = 'CommongGround_cartItems'
 // const cartItems = window.localStorage.getItem(cartStorage)
 
 const cartInitialState: Cart = {
-  showModal: false,
   cartItems: [],
   totalQuantity: 0,
   totalPrice: 0,
@@ -29,9 +27,6 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: cartInitialState,
   reducers: {
-    showModal: (state, action) => {
-      return (state.showModal = action.payload)
-    },
     addToCart: (state, action: PayloadAction<CartProduct>) => {
       const item: CartProduct = action.payload
       const items = addToCartUtil(item, state.cartItems)

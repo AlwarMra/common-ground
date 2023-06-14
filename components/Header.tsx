@@ -52,7 +52,7 @@ const Header: React.FC = () => {
             <div className='text-right hidden md:block'>
               <LanguageSwitcher />
             </div>
-            <div className='items-center justify-end flex md:flex-1'>
+            <div className='items-center justify-end flex md:flex-1 md:mt-4'>
               <Link
                 href={user === null ? '/login' : '/profile'}
                 className=' inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100'

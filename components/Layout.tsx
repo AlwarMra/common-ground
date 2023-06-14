@@ -10,16 +10,18 @@ import {
   UserIcon,
   LogoutIcon,
 } from './Icons'
-
-// import Sidebar from './Sidebar'
+import Drawer from './Drawer/Drawer'
+import Overlay from './Overlay'
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { pathname } = useRouter()
-  return (
-    <>
-      <Header />
-      <main className='mx-auto max-w-7xl w-11/12'>
-        {pathname.includes('dashboard') ? (
+
+  if (pathname.includes('dashboard')) {
+    return (
+      <>
+        <Overlay />
+        <Header />
+        <main className='mx-auto max-w-7xl w-11/12'>
           <div className='grid grid-cols-min-content mt-4 gap-2'>
             <Sidebar>
               <Sidebar.Title title={'Menu'} />
@@ -46,10 +48,18 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </Sidebar>
             {children}
           </div>
-        ) : (
-          children
-        )}
-      </main>
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Overlay />
+      <Header />
+      <Drawer />
+      <main className='mx-auto max-w-7xl w-11/12'>{children}</main>
       <Footer />
     </>
   )

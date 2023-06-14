@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { CartProduct } from '../types/common'
 import {
   addToCartUtil,
@@ -8,7 +8,6 @@ import {
 } from './utils'
 
 interface Cart {
-  showModal: boolean
   cartItems: CartProduct[] | []
   totalQuantity: number
   totalPrice: number
@@ -19,7 +18,6 @@ export const cartStorage = 'CommongGround_cartItems'
 // const cartItems = window.localStorage.getItem(cartStorage)
 
 const cartInitialState: Cart = {
-  showModal: false,
   cartItems: [],
   totalQuantity: 0,
   totalPrice: 0,
@@ -29,10 +27,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: cartInitialState,
   reducers: {
-    showModal: (state, action) => {
-      return (state.showModal = action.payload)
-    },
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<CartProduct>) => {
       const item: CartProduct = action.payload
       const items = addToCartUtil(item, state.cartItems)
       const { q, price: p } = calculateTotalPriceAndQuantity(items)
@@ -43,7 +38,7 @@ const cartSlice = createSlice({
       cartSlice.caseReducers.saveCart(state)
       return
     },
-    substractFromCart: (state, action) => {
+    substractFromCart: (state, action: PayloadAction<CartProduct>) => {
       const item: CartProduct = action.payload
       const items = substractFromCartUtil(item, state.cartItems)
       const { q, price: p } = calculateTotalPriceAndQuantity(items)
@@ -54,7 +49,7 @@ const cartSlice = createSlice({
       cartSlice.caseReducers.saveCart(state)
       return
     },
-    removeFromCart: (state, action) => {
+    removeFromCart: (state, action: PayloadAction<CartProduct>) => {
       const item: CartProduct = action.payload
       const items = removeFromCartUtil(item, state.cartItems)
       const { q, price: p } = calculateTotalPriceAndQuantity(items)
@@ -72,7 +67,7 @@ const cartSlice = createSlice({
       window.localStorage.removeItem(cartStorage)
       return
     },
-    populateCart: (state, action) => {
+    populateCart: (state, action: PayloadAction<CartProduct[]>) => {
       const { q, price: p } = calculateTotalPriceAndQuantity(action.payload)
       state.cartItems = action.payload
       state.totalPrice = p
@@ -89,4 +84,6 @@ const cartSlice = createSlice({
 })
 
 export const cartActions = cartSlice.actions
+export type cartActionsType = typeof cartActions
+
 export default cartSlice.reducer

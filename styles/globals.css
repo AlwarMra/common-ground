@@ -29,3 +29,24 @@ html {
     repeating-conic-gradient(var(--c2) 0 45deg, var(--c1) 0 25%) 0 0 /
       calc(2 * var(--s)) calc(2 * var(--s)); */
 }
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 251 235) rgb(207 250 254);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(255 251 235);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(207 250 254);
+  border-radius: 14px;
+  border: 3px solid rgb(255 251 235);
+}

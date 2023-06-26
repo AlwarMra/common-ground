@@ -16,9 +16,6 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const title = ('title_' + lang) as keyof Product
-  const desc = ('description_' + lang) as keyof Product
-
   const handleProduct = (prod: Product) => {
     setIsLoading(true)
     dispatch(cartActions.addToCart({ ...prod, q: 1 }))
@@ -48,7 +45,7 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
       </Link>
       <div className='pt-8 text-center mb-6'>
         {/* @ts-ignore  ===> I know it will always be defined!!!!!!!! */}
-        <h3 className='bold font-fancy mb-3'>{prod[lang][title]}</h3>
+        <h3 className='bold font-fancy mb-3'>{prod[lang].title}</h3>
         <p
           className='overflow-hidden'
           style={{
@@ -56,10 +53,9 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
             WebkitBoxOrient: 'vertical',
             WebkitLineClamp: '3',
           }}
-        >
-          {/* @ts-ignore */}
-          {prod[lang][desc]}
-        </p>
+          /* @ts-ignore */
+          dangerouslySetInnerHTML={{ __html: prod[lang].description }}
+        />
       </div>
       <div className='flex justify-between items-center border-t-2 border-cyan-100 pt-6 pb-1'>
         <div className='float-left'>

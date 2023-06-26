@@ -5,11 +5,11 @@ import { Product } from '../../../types/common'
 import { getAllProducts } from '../../../firebase/clientApp'
 
 const DashboardProducts = () => {
-  const [products, setProducts] = useState<any>([])
+  const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
     getAllProducts().then(prods => {
-      setProducts(prods)
+      setProducts(prods as Product[])
     })
   }, [])
 
@@ -39,12 +39,12 @@ const DashboardProducts = () => {
               <div className=' flex items-center gap-4'>
                 <Image
                   src={prod.images[0]}
-                  alt={prod.es.title_es}
+                  alt={prod.es.title}
                   width={100}
                   height={100}
                   style={{ objectFit: 'cover' }}
                 />
-                <p className='text-lg'>{prod.es.title_es}</p>
+                <p className='text-lg'>{prod.es.title}</p>
               </div>
               <p>{prod.price}€</p>
             </Link>

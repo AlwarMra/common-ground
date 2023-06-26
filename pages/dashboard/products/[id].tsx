@@ -100,15 +100,14 @@ const Product = () => {
   }
 
   useEffect(() => {
-    let data
     const initialValues = {
       es: {
-        title_es: '',
-        description_es: '',
+        title: '',
+        description: '',
       },
       en: {
-        title_en: '',
-        description_en: '',
+        title: '',
+        description: '',
       },
       price: 0,
       compared_at_price: 0,
@@ -121,13 +120,15 @@ const Product = () => {
     }
     if (typeof id === 'string') {
       getProductById(id)
-        .then(async doc => {
-          data = await doc.data()
-          setProduct(data as Product)
-          setCurrentFiles(data!.images)
+        .then(data => {
+          const prod = data as Product
+          setProduct(prod)
+          setCurrentFiles(prod!.images)
           setActionType('update')
         })
-        .catch(() => setError('This product does not exist'))
+        .catch(error => {
+          setError('This product does not exist')
+        })
     }
   }, [id])
 

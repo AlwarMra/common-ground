@@ -55,19 +55,27 @@ export function addUsertoDB(name: string, email: string, uid: string) {
 export function addProduct(prod: Product) {
   return db.collection('products').add(prod)
 }
-export function getProductById(id: string) {
-  return db.collection('products').doc(id).get()
-}
+
 export function updateProduct(prod: Product, id: string) {
   return db.collection('products').doc(id).update(prod)
 }
 export function deleteProduct(id: string) {
   return db.collection('products').doc(id).delete()
 }
+
+export function getProductById(id: string) {
+  const docRef = db.collection('products').doc(id)
+  return docRef.get().then(doc => {
+    if (!doc.exists) throw new Error('Product does not exists')
+    const data = doc.data()
+    return { ...data, id: doc.id }
+  })
+}
+
 export function getAllProducts() {
   return db
     .collection('products')
-    .orderBy('es.title_es')
+    .orderBy('es.title')
     .get()
     .then(({ docs }) => {
       return docs.map(doc => {

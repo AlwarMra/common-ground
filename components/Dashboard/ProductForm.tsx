@@ -53,12 +53,12 @@ const ProductForm = ({
             <TabPanel hidden={selectedTabLang !== 'es'}>
               <Input
                 type='text'
-                name='es.title_es'
+                name='es.title'
                 label='Title'
                 placeholder='Title ES'
               />
               <Textarea
-                name='es.description_es'
+                name='es.description'
                 label='Description'
                 placeholder='Description ES'
               />
@@ -66,12 +66,12 @@ const ProductForm = ({
             <TabPanel hidden={selectedTabLang !== 'en'}>
               <Input
                 type='text'
-                name='en.title_en'
+                name='en.title'
                 label='Title'
                 placeholder='Title EN'
               />
               <Textarea
-                name='en.description_en'
+                name='en.description'
                 label='Description'
                 placeholder='Description EN'
               />

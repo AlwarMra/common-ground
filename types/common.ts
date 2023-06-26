@@ -14,12 +14,12 @@ export enum database {
 export interface Product {
   id?: string
   es: {
-    title_es: string
-    description_es: string
+    title: string
+    description: string
   }
   en: {
-    title_en: string
-    description_en: string
+    title: string
+    description: string
   }
   price: number
   compared_at_price: number

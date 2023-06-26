@@ -4,8 +4,11 @@ import { GetServerSideProps } from 'next'
 import { getProductById } from '../../firebase/clientApp'
 import { Product } from '../../types/common'
 import { useI18n } from '../../context/I18nContext'
+import useProduct from '../../hooks/useProduct'
+import { Spinner } from '../../components/Icons'
 
 const Product = ({ prod }: { prod: Product }) => {
+  const { submitProduct, isLoading } = useProduct()
   const [mainImage, setMainImage] = useState<string>('')
   const lang = useI18n().routerLocale.toString() as keyof Product
 
@@ -52,13 +55,31 @@ const Product = ({ prod }: { prod: Product }) => {
         </div>
         <div className='p-43'>
           <div className='py-3 font-fancy text-xl'>{prod.es.title}</div>
-          <div className='my-5 text-red-500 text-4xl'>{prod.price}€</div>
+          <div className='my-5'>
+            <span className='text-red-500 text-4xl'>{prod.price}€</span>
+            {prod.compared_at_price > 0 && (
+              <span className='text-3xl ml-4 text-amber-500 line-through'>
+                {prod.compared_at_price}€
+              </span>
+            )}
+          </div>
           <div
             className='my-5 pr-4 [&>*]:mb-4'
             /* @ts-ignore */
             dangerouslySetInnerHTML={{ __html: prod[lang].description }}
           />
-          <button className='bg-red-500 p-4 rounded-md'>sfdsfsdff</button>
+          {isLoading ? (
+            <button className='bg-red-500 p-4 rounded-md font-bold min-w-[150px] h-16'>
+              <Spinner size={25} />
+            </button>
+          ) : (
+            <button
+              className='bg-red-500 p-4 rounded-md font-bold min-w-[150px] h-16'
+              onClick={() => submitProduct(prod)}
+            >
+              Añadir al carrito
+            </button>
+          )}
         </div>
       </div>
     </section>

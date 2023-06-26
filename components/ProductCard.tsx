@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '../types/common'
 import { Spinner, AddIcon } from './Icons'
-import { useDispatch } from 'react-redux'
-import { cartActions } from '../store/cart'
+import useProduct from '../hooks/useProduct'
 type ObjectKey = keyof Product
 interface ProductCardProps {
   prod: Product
@@ -13,14 +12,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const dispatch = useDispatch()
-
-  const handleProduct = (prod: Product) => {
-    setIsLoading(true)
-    dispatch(cartActions.addToCart({ ...prod, q: 1 }))
-    setTimeout(() => setIsLoading(false), 1500)
-  }
+  const { submitProduct, isLoading } = useProduct()
 
   return (
     <div
@@ -60,6 +52,11 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
       <div className='flex justify-between items-center border-t-2 border-cyan-100 pt-6 pb-1'>
         <div className='float-left'>
           <span className='font-bold'>{prod.price}€</span>
+          {prod.compared_at_price > 0 && (
+            <span className='ml-3 line-through text-red-500'>
+              {prod.compared_at_price}€
+            </span>
+          )}{' '}
         </div>
         <div className='float-right'>
           {isLoading ? (
@@ -67,7 +64,7 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
               <Spinner size={30} bgColor={'text-cyan-100'} />
             </span>
           ) : (
-            <span className='font-bold' onClick={() => handleProduct(prod)}>
+            <span className='font-bold' onClick={() => submitProduct(prod)}>
               <AddIcon size={40} />
             </span>
           )}

@@ -17,7 +17,6 @@ const DrawerProduct = React.memo(function DrawerProduct({
   lang,
   actions,
 }: IProps) {
-  const title = ('title_' + lang) as keyof CartProduct
   const dispatch = useAppDispatch()
   return (
     <div className='grid grid-cols-1-2 items-end my-4 mx-1 py-2 no-underline md:gap-4 relative after:content-[""] after:absolute after:border-b after:border-b-amber-400 after:left-0 after:w-full after:-bottom-2'>
@@ -28,13 +27,13 @@ const DrawerProduct = React.memo(function DrawerProduct({
           height={80}
           className='w-20 h-20 md:w-24 md:h-24 '
           /* @ts-ignore  ===> I know it will always be defined!!!!!!!! */
-          alt={prod[lang][title]}
+          alt={prod[lang].title}
         />
       </Link>
       <div className='ml-2 flex flex-col gap-2 justify-around'>
         <p className='font-fancy'>
           {/* @ts-ignore */}
-          {prod[lang][title]} - {prod.price}€
+          {prod[lang].title} - {prod.price}€
         </p>
         <div className='flex'>
           <table

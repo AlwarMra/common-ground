@@ -50,7 +50,7 @@ const Banner = () => {
               transformOrigin: 'inherit',
               transform: `skewX(${skew}deg)`,
             }}
-            alt=''
+            alt='Discs and soundsystems on red'
           />
         </div>
         <div
@@ -64,7 +64,7 @@ const Banner = () => {
               transformOrigin: 'inherit',
               transform: `skewX(${skew}deg)`,
             }}
-            alt=''
+            alt='Big wall of soundsystems'
           />
         </div>
       </div>

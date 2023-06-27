@@ -14,3 +14,6 @@ export { default as SettingsIcon } from './SettingsIcon'
 export { default as Spinner } from './Spinner'
 export { default as AddIcon } from './AddIcon'
 export { default as RemoveIcon } from './RemoveIcon'
+
+export { default as InstagramIcon } from './InstagramIcon'
+export { default as TwitterIcon } from './TwitterIcon'

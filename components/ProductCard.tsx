@@ -38,7 +38,7 @@ const ProductCard = ({ prod, lang, index }: ProductCardProps) => {
       <div className='pt-8 text-center mb-6'>
         {/* @ts-ignore  ===> I know it will always be defined!!!!!!!! */}
         <h3 className='bold font-fancy mb-3'>{prod[lang].title}</h3>
-        <p
+        <div
           className='overflow-hidden'
           style={{
             display: '-webkit-box',

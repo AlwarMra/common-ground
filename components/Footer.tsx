@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className='wave-container bg-amber-200 lg:grid lg:grid-cols-5 relative before:w-full before:absolute before:bg-auto before:bg-no-repeat'>
+    <footer className='bg-amber-200 mt-16 lg:grid lg:grid-cols-5 relative before:w-full before:absolute before:bg-auto before:bg-no-repeat'>
       <div className='relative block h-32 lg:col-span-2 lg:h-full'>
         <Image
           className='absolute inset-0 h-full w-full object-cover'

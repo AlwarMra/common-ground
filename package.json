@@ -25,6 +25,7 @@
     "react-headless-tabs": "^6.0.3",
     "react-redux": "^8.0.7",
     "redux": "^4.2.1",
+    "stripe": "^12.10.0",
     "typescript": "4.9.4",
     "yup": "^0.32.11"
   },

@@ -5,6 +5,7 @@ import { useI18n } from '../../context/I18nContext'
 import { CartProduct } from '../../types/common'
 import { cartActions } from '../../store/cart'
 import { uiActions } from '../../store/ui'
+import CheckoutButton from './CheckoutButton'
 
 const Drawer = () => {
   const dispatch = useAppDispatch()
@@ -55,7 +56,10 @@ const Drawer = () => {
                 </span>
                 <span>{cart.totalPrice}€</span>
               </p>
-              <button>Buy</button>
+              <CheckoutButton
+                items={cart.cartItems}
+                lang={routerLocale.toString() as keyof CartProduct}
+              />
             </div>
           </>
         ) : (

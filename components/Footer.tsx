@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
 
             <ul className='mt-8 flex gap-6'>
               <li>
-                <Link href='' className='transition hover:opacity-75'>
+                <Link href='/' className='transition hover:opacity-75'>
                   <span className='sr-only'>Instagram</span>
                   <InstagramIcon />
                 </Link>

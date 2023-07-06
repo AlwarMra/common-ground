@@ -1,10 +1,10 @@
 import React from 'react'
-import { CartProduct } from '../../types/common'
 import Link from 'next/link'
 import Image from 'next/image'
-import { RemoveIcon } from '../Icons'
-import { useAppDispatch } from '../../hooks/reduxHooks'
-import { cartActionsType } from '../../store/cart'
+import { CartProduct } from 'types/common'
+import { cartActionsType } from 'store/cart'
+import { RemoveIcon } from 'components/Icons'
+import { useAppDispatch } from 'hooks/reduxHooks'
 
 interface IProps {
   prod: CartProduct

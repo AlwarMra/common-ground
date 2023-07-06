@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import React from 'react'
-import { InstagramIcon, TwitterIcon } from './Icons'
+import Link from 'next/link'
 import Image from 'next/image'
-import footer_img from '../public/imgs/footer.png'
+import footer_img from 'public/imgs/footer.png'
+import { InstagramIcon, TwitterIcon } from 'components/Icons'
+
 const Footer: React.FC = () => {
   const year = new Date().getFullYear()
 

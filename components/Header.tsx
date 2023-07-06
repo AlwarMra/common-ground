@@ -1,12 +1,11 @@
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useContext, useState } from 'react'
-import AuthContext from '../context/AuthContext'
-import { CartIcon, UserIcon, MenuIcon, CloseIcon } from './Icons'
-import LanguageSwitcher from './LanguageSwitcher'
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
-import { uiActions } from '../store/ui'
-import cart from '../store/cart'
+import AuthContext from 'context/AuthContext'
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks'
+import { CartIcon, UserIcon, MenuIcon, CloseIcon } from 'components/Icons'
+import LanguageSwitcher from 'components/LanguageSwitcher'
+import { uiActions } from 'store/ui'
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

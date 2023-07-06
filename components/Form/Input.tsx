@@ -1,7 +1,7 @@
-import { useField } from 'formik'
 import React from 'react'
-import { InputProps } from '../../types/dashboard'
-import Label from './Label'
+import { useField } from 'formik'
+import { InputProps } from 'types/dashboard'
+import Label from 'components/Form/Label'
 
 const Input = ({ label, ...props }: InputProps) => {
   const [field, meta] = useField(props)

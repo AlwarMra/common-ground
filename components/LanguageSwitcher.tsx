@@ -1,9 +1,9 @@
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { useI18n } from '../context/I18nContext'
-import { langs as langsEnum } from '../types/common'
-import { ChevronIcon, EnglishIcon, SpanishIcon } from './Icons'
+import { langs as langsEnum } from 'types/common'
+import { useI18n } from 'context/I18nContext'
+import { ChevronIcon, EnglishIcon, SpanishIcon } from 'components/Icons'
 
 const LanguageSwitcher = () => {
   const { changeLang, routerLocale } = useI18n()

@@ -1,6 +1,6 @@
 import React from 'react'
-import SidebarItem from './SidebarItem'
-import Title from './Title'
+import SidebarItem from 'components/Sidebar/SidebarItem'
+import Title from 'components/Sidebar/Title'
 
 interface children {
   children: React.ReactNode

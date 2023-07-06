@@ -1,5 +1,5 @@
 import React from 'react'
-import { GoogleIcon } from '../Icons'
+import { GoogleIcon } from 'components/Icons'
 
 interface googleBtnProps {
   text: string

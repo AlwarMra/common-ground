@@ -1,8 +1,8 @@
 import React from 'react'
-import { ProductFormProps } from '../../types/dashboard'
+import { ProductFormProps } from 'types/dashboard'
 import { Form, Formik } from 'formik'
-import { productSchema } from '../../yupSchema'
-import TabSelector from '../TabSelector'
+import { productSchema } from 'yupSchema'
+import TabSelector from 'components/TabSelector'
 import { TabPanel, useTabs } from 'react-headless-tabs'
 import {
   Input,

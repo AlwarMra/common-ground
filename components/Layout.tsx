@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router'
 import React from 'react'
-import Footer from './Footer'
-import Header from './Header'
-import Sidebar from './Sidebar'
+import { useRouter } from 'next/router'
+import Footer from 'components/Footer'
+import Header from 'components/Header'
+import Sidebar from 'components/Sidebar'
 import {
   OrdersIcon,
   ProductsIcon,
   SettingsIcon,
   UserIcon,
   LogoutIcon,
-} from './Icons'
-import Drawer from './Drawer/Drawer'
-import Overlay from './Overlay'
+} from 'components/Icons'
+import Drawer from 'components/Drawer/Drawer'
+import Overlay from 'components/Overlay'
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { pathname } = useRouter()

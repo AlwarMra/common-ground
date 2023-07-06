@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product } from '../types/common'
-import { Spinner, AddIcon } from './Icons'
-import useProduct from '../hooks/useProduct'
+import { Product } from 'types/common'
+import { Spinner, AddIcon } from 'components/Icons'
+import useProduct from 'hooks/useProduct'
 type ObjectKey = keyof Product
 interface ProductCardProps {
   prod: Product

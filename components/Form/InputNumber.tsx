@@ -1,7 +1,7 @@
 import { isNaN, useField } from 'formik'
 import React, { useCallback } from 'react'
-import { InputNumberProps } from '../../types/dashboard'
-import Label from './Label'
+import { InputNumberProps } from 'types/dashboard'
+import Label from 'components/Form//Label'
 
 const InputNumber = ({
   label,

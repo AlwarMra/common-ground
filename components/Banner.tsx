@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
-import img_1 from '../public/imgs/banner_img_1.jpg'
-import img_2 from '../public/imgs/banner_img_2.jpg'
+import img_1 from 'public/imgs/banner_img_1.jpg'
+import img_2 from 'public/imgs/banner_img_2.jpg'
 
 const Banner = () => {
   const [skew, setSkew] = useState<Number>()

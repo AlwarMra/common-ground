@@ -1,4 +1,4 @@
-import { CartProduct } from '../types/common'
+import { CartProduct } from 'types/common'
 
 type checkoutBodyRequest = {
   items: CartProduct[]
@@ -12,7 +12,7 @@ type checkoutBodyRequest = {
 
 export default function useCheckout() {
   function createCheckoutSession(body: checkoutBodyRequest) {
-    return fetch('/api/checkout_sessions', {
+    return fetch('/api/checkout/checkout_sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -29,7 +29,7 @@ export default function useCheckout() {
 
   const submitCheckout = (body: checkoutBodyRequest) => {
     return createCheckoutSession(body).then(res => {
-      console.log('fffff')
+      console.log(res)
       window.location.href = res.url
     })
   }

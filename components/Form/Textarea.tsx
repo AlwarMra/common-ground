@@ -1,7 +1,7 @@
-import { useField } from 'formik'
 import React from 'react'
-import { textAreaProps } from '../../types/dashboard'
-import Label from './Label'
+import { useField } from 'formik'
+import { textAreaProps } from 'types/dashboard'
+import Label from 'components/Form//Label'
 
 const Textarea = ({ label, ...props }: textAreaProps) => {
   const [field, meta] = useField(props)

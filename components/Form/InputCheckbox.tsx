@@ -1,6 +1,6 @@
 import React from 'react'
 import { useField } from 'formik'
-import { InputCheckboxProps } from '../../types/dashboard'
+import { InputCheckboxProps } from 'types/dashboard'
 
 const Input = ({ label, ...props }: InputCheckboxProps) => {
   const [field, meta] = useField(props)

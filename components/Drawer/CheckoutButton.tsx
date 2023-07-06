@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { CartProduct } from '../../types/common'
-import useCheckout from '../../hooks/useCheckout'
+import { CartProduct } from 'types/common'
+import useCheckout from 'hooks/useCheckout'
 
 type ICheckoutButton = {
   items: CartProduct[]

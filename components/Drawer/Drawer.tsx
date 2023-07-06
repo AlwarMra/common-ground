@@ -1,11 +1,12 @@
 import React from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import DrawerProduct from './DrawerProduct'
-import { useI18n } from '../../context/I18nContext'
-import { CartProduct } from '../../types/common'
-import { cartActions } from '../../store/cart'
-import { uiActions } from '../../store/ui'
-import CheckoutButton from './CheckoutButton'
+import { CartProduct } from 'types/common'
+import { cartActions } from 'store/cart'
+import { uiActions } from 'store/ui'
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks'
+// Components
+import DrawerProduct from 'components/Drawer/DrawerProduct'
+import CheckoutButton from 'components/Drawer/CheckoutButton'
+import { useI18n } from 'context/I18nContext'
 
 const Drawer = () => {
   const dispatch = useAppDispatch()

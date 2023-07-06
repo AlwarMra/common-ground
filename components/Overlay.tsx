@@ -1,6 +1,6 @@
 import React from 'react'
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
-import { uiActions } from '../store/ui'
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks'
+import { uiActions } from 'store/ui'
 
 const Overlay = () => {
   const dispatch = useAppDispatch()

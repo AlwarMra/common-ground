@@ -29,10 +29,10 @@ const CheckoutButton = ({ items, lang }: ICheckoutButton) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search)
 
-    if (query.get('success')) {
+    if (query.get('checkout_success')) {
       console.log('Order placed! You will receive an email confirmation.')
     }
-    if (query.get('canceled')) {
+    if (query.get('checkout_canceled')) {
       console.log(
         'Order canceled -- continue to shop around and checkout when you’re ready.',
       )

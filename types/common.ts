@@ -10,8 +10,9 @@ export enum langs {
 export enum database {
   USERS = 'users',
 }
+
 //Product
-export interface Product {
+export type Product = {
   id?: string
   es: {
     title: string
@@ -30,4 +31,12 @@ export interface Product {
 
 export interface CartProduct extends Product {
   q: number
+}
+
+export type Order = {
+  userId: string
+  stripeCustomerId: string
+  checkoutId: string
+  products: CartProduct[]
+  payment_status: string
 }

@@ -1,5 +1,6 @@
 import Stripe from 'stripe'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { buffer, stripeItemsReducer } from 'utils/stripe'
 
 const webUrl =
   process.env.NODE_ENV === 'production'
@@ -47,21 +48,7 @@ export default async function checkoutWebhooks(
   switch (event.type) {
     case 'checkout.session.completed':
       const data: any = event.data.object
-      stripe.customers.retrieve(data.customer).then(async stripeCustomer => {
-        try {
-          const customer = {
-            ...stripeCustomer,
-            shipping_details: data.shipping_details,
-          }
-          const lineItems = await stripe.checkout.sessions.listLineItems(
-            data.id,
-          )
-          //   return createNewOrder(data, customer, lineItems.data)
-          res.status(200).end()
-        } catch (err: Error | any | unknown) {
-          res.status(400).send(`Webhook Error: ${err.message}`)
-        }
-      })
+      checkoutSessionComplete(res, stripe, data)
       break
     default:
       console.warn(`Unhandled event type: ${event.type}`)
@@ -69,7 +56,32 @@ export default async function checkoutWebhooks(
   res.status(200).end('Webhook succesfull')
 }
 
-const createNewOrder = async (data: any, customer: any, items: any) => {
+const checkoutSessionComplete = (
+  res: NextApiResponse,
+  stripe: Stripe,
+  data: any,
+) => {
+  stripe.customers.retrieve(data.customer).then(async stripeCustomer => {
+    try {
+      const customer = {
+        ...stripeCustomer,
+        shipping_details: data.shipping_details,
+      }
+      const lineItems = await stripe.checkout.sessions.listLineItems(data.id)
+
+      await createNewOrder(data, customer, lineItems.data)
+      res.status(200).end()
+    } catch (err: Error | any | unknown) {
+      res.status(400).send(`Webhook Error: ${err.message}`)
+    }
+  })
+}
+
+const createNewOrder = async (
+  data: any,
+  customer: any,
+  items: Stripe.LineItem[],
+) => {
   const metadata = data.metadata
   const products = items.map((item: any, index: any) => {
     return { id: metadata[index], q: item.quantity }
@@ -79,10 +91,10 @@ const createNewOrder = async (data: any, customer: any, items: any) => {
     stripeCustomerId: customer.id,
     checkoutId: data.id,
     products,
-    subtotal: reducer(items, 'amount_subtotal'),
-    total: reducer(items, 'amount_total'),
+    subtotal: stripeItemsReducer(items, 'amount_subtotal'),
+    total: stripeItemsReducer(items, 'amount_total'),
     payment_status: data.payment_status,
-    totalQ: reducer(items, 'quantity'),
+    totalQ: stripeItemsReducer(items, 'quantity'),
   }
 
   const order = await fetch(webUrl + '/api/orders', {
@@ -90,28 +102,17 @@ const createNewOrder = async (data: any, customer: any, items: any) => {
     body: JSON.stringify(newOrder),
     headers: { 'Content-Type': 'application/json' },
   })
+
+  //   const userInfo = {
+  //     userId: customer.metadata.userId,
+  //     shipping_details: customer.shipping_details,
+  //     orderId: order.id
+  //   }
+
+  //   const customer = await fetch(webUrl + '/api/users/update_orders', {
+  //     method: 'PUT',
+  //     body: JSON.stringify
+  //   })
+
   console.log('ORDER', order)
-}
-
-function reducer(data, prop: 'amount_subtotal' | 'amount_total' | 'quantity') {
-  const sum = data.reduce((accumulator: any, object) => {
-    return accumulator + object[prop]
-  }, 0)
-  return sum
-}
-
-const buffer = (req: NextApiRequest) => {
-  return new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = []
-
-    req.on('data', (chunk: Buffer) => {
-      chunks.push(chunk)
-    })
-
-    req.on('end', () => {
-      resolve(Buffer.concat(chunks))
-    })
-
-    req.on('error', reject)
-  })
 }

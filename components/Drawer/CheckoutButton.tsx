@@ -15,7 +15,7 @@ const CheckoutButton = ({ items, lang }: ICheckoutButton) => {
 
     const userInfo = {
       email: 'alwaromoreno@gmail.com',
-      id: '1234556',
+      id: '8F9B1ZOuGBT9Pe5z3gIsHtklyzp1',
       name: 'Alwar',
     }
 

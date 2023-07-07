@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
-import { Product } from '../types/common'
+import { Product, Order } from 'types/common'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAcTedBuWurGyfn_aKwbZSNUPqAiHGCFLw',
@@ -51,6 +51,15 @@ export function addUsertoDB(name: string, email: string, uid: string) {
     orders: [],
   })
 }
+
+export function updateUserOrders(id: string, orderId: string) {
+  db.collection('users')
+    .doc(id)
+    .update({
+      orders: firebase.firestore.FieldValue.arrayUnion(orderId),
+    })
+}
+
 // Products
 export function addProduct(prod: Product) {
   return db.collection('products').add(prod)
@@ -87,6 +96,11 @@ export function getAllProducts() {
         }
       })
     })
+}
+
+// Orders
+export function createOrder(order: Order) {
+  return db.collection('orders').add(order)
 }
 
 // Images

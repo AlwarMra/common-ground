@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
-import { Product, Order } from 'types/common'
+import { Product, IOrder } from 'types/common'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAcTedBuWurGyfn_aKwbZSNUPqAiHGCFLw',
@@ -99,7 +99,7 @@ export function getAllProducts() {
 }
 
 // Orders
-export function createOrder(order: Order) {
+export function createOrder(order: IOrder) {
   return db.collection('orders').add(order)
 }
 

@@ -33,10 +33,26 @@ export interface CartProduct extends Product {
   q: number
 }
 
-export type Order = {
+export type IOrder = {
   userId: string
   stripeCustomerId: string
   checkoutId: string
-  products: CartProduct[]
+  products: {
+    id: string
+    q: number
+  }[]
   payment_status: string
+  subtotal: number
+  total: number
+  totalQ: number
+  shippingDetails: IShippingDetails
+}
+
+export type IShippingDetails = {
+  line1: string
+  country: string
+  state: string
+  city: string
+  postal_code: string
+  line2: string | null
 }

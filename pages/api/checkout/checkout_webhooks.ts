@@ -1,6 +1,7 @@
 import Stripe from 'stripe'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { buffer, stripeItemsReducer } from 'utils/stripe'
+import { IOrder } from 'types/common'
 
 const webUrl =
   process.env.NODE_ENV === 'production'
@@ -63,12 +64,12 @@ const checkoutSessionComplete = (
 ) => {
   stripe.customers.retrieve(data.customer).then(async stripeCustomer => {
     try {
+      const lineItems = await stripe.checkout.sessions.listLineItems(data.id)
+
       const customer = {
         ...stripeCustomer,
         shipping_details: data.shipping_details,
       }
-      const lineItems = await stripe.checkout.sessions.listLineItems(data.id)
-
       await createNewOrder(data, customer, lineItems.data)
       res.status(200).end()
     } catch (err: Error | any | unknown) {
@@ -83,10 +84,13 @@ const createNewOrder = async (
   items: Stripe.LineItem[],
 ) => {
   const metadata = data.metadata
-  const products = items.map((item: any, index: any) => {
-    return { id: metadata[index], q: item.quantity }
+  const products = items.map((item, index: number) => {
+    return {
+      id: metadata[index],
+      q: item.quantity === null ? 0 : item.quantity,
+    }
   })
-  const newOrder = {
+  const newOrder: IOrder = {
     userId: customer.metadata.userId,
     stripeCustomerId: customer.id,
     checkoutId: data.id,
@@ -95,24 +99,12 @@ const createNewOrder = async (
     total: stripeItemsReducer(items, 'amount_total'),
     payment_status: data.payment_status,
     totalQ: stripeItemsReducer(items, 'quantity'),
+    shippingDetails: customer.shipping_details.address,
   }
 
-  const order = await fetch(webUrl + '/api/orders', {
+  return await fetch(webUrl + '/api/orders', {
     method: 'POST',
     body: JSON.stringify(newOrder),
     headers: { 'Content-Type': 'application/json' },
   })
-
-  //   const userInfo = {
-  //     userId: customer.metadata.userId,
-  //     shipping_details: customer.shipping_details,
-  //     orderId: order.id
-  //   }
-
-  //   const customer = await fetch(webUrl + '/api/users/update_orders', {
-  //     method: 'PUT',
-  //     body: JSON.stringify
-  //   })
-
-  console.log('ORDER', order)
 }
